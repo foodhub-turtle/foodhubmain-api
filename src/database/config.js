@@ -5,7 +5,13 @@ module.exports = {
   development: {
     use_env_variable: true,
     url: process.env.DEV_DATABASE_URL,
-    dialect: "postgres"
+    dialect: "postgres",
+    dialectOptions: {
+      ssl: {
+          require: true,
+          rejectUnauthorized: false
+      }
+   },
   },
   test: {
     use_env_variable: true,
