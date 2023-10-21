@@ -8,6 +8,18 @@ module.exports = (sequelize, DataTypes) => {
           primaryKey: true,
           type: DataTypes.BIGINT
         },
+        setting_id: {
+          type: DataTypes.BIGINT,
+          allowNull: false
+        },
+        foodhubbox_type: {
+            type: DataTypes.INTEGER,
+            allowNull: false
+        },
+        percentage: {
+            type: DataTypes.INTEGER,
+            allowNull: false
+        },
         amount: {
             type: DataTypes.DOUBLE,
             allowNull: false

@@ -235,7 +235,7 @@ export const verifyOtp = catchAsync(async (req, res, next) => {
     //   return res.status(400).send(response) 
     // }
 
-    const otp_instance= await findOtp(otp, {otp: otpString, user_phone_number: check})
+    const otp_instance= await commonService.findWithModelAndFilter(otp, {otp: otpString, user_phone_number: check})
     //Check if OTP is available in the DB
     if(otp_instance!=null){
       //Check if OTP is already used or not

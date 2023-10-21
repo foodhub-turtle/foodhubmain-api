@@ -77,7 +77,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: true
       },
       delivery_status: {
-        type: DataTypes.ENUM('ongoing', 'available', 'inactive'),
+        type: DataTypes.ENUM('ongoing', 'available', 'issue','break', 'stop'),
         allowNull: true
       },
       joined_at: {

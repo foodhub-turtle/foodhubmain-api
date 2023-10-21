@@ -12,6 +12,22 @@ module.exports = (sequelize, DataTypes) => {
           type: DataTypes.STRING,
           allowNull: false
         },
+        country_id: {
+          type: DataTypes.BIGINT,
+          allowNull: true
+        },
+        state_id: {
+          type: DataTypes.BIGINT,
+          allowNull: true
+        },
+        city_id: {
+          type: DataTypes.BIGINT,
+          allowNull: true
+        },
+        status: {
+          type: DataTypes.INTEGER,
+          allowNull: true
+        },
         createdAt: {
           allowNull: false,
           type: DataTypes.DATE,

@@ -9,7 +9,7 @@ const { setting, foodhubboxsetting, foodhubboxbranch, restaurant_discount, vouch
 
 export const getFoodhubBoxBranches = catchAsync(async (req, res, next) => {
     let settingObj = await commonService.findWithModelAndFilter(setting);
-    let allDiscounts = await commonService.findAllWithModel(foodhubboxsetting);
+    let discountObj = await commonService.findWithModelAndFilter(foodhubboxsetting, {setting_id: settingObj.id});
     let allBranches = await commonService.findAllWithModel(foodhubboxbranch);
     for (let index = 0; index < allBranches.length; index++) {
       const element = await commonService.findWithModelAndFilter(branch, {id: allBranches[index].branch_id});;
@@ -52,7 +52,7 @@ export const getFoodhubBoxBranches = catchAsync(async (req, res, next) => {
     settingObj = _.pick(settingObj, ['foodhub_box_time_limit', 'foodhub_box_branch_limit']);
     let responsPayload = {
       foodhub_box_setting: settingObj,
-      foodhub_box_discounts: allDiscounts,
+      foodhub_box_discounts: discountObj,
       foodhub_box_branches: allBranches.length > 0 ? _.sortBy(_.slice(allBranches, 0, 15), ['priority']) : []
     }
     return res.status(200).json({

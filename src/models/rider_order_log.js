@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
-    const RiderTakenShift = sequelize.define(
-      "rider_taken_shift",
+    const RiderOrderLog = sequelize.define(
+      "rider_order_log",
       {
         id: {
           allowNull: false,
@@ -12,30 +12,22 @@ module.exports = (sequelize, DataTypes) => {
           type: DataTypes.BIGINT,
           allowNull: true
         },
-        rider_shift_id: {
+        order_id: {
           type: DataTypes.BIGINT,
           allowNull: true
         },
-        isSwape: {
-          type: DataTypes.INTEGER,
-          allowNull: true
-        },
-        isActive: {
-          type: DataTypes.INTEGER,
-          allowNull: true
-        },
-        rider_work_time_id: {
+        customer_id: {
           type: DataTypes.BIGINT,
           allowNull: true
         },
-        shiftdate: {
+        order_status: {
+          type: DataTypes.ENUM('pending', 'confirmed', 'prepared', 'preparing', 'readytopickup', 'handovertorider', 'acceptedorder', 'handovertocustomer','delivering', 'delivered', 'rejected'),
+          allowNull: true
+        },
+        datetime: {
           type: DataTypes.DATE,
           allowNull: true,
           defaultValue: new Date()
-        },
-        status: {
-          type: DataTypes.INTEGER,
-          allowNull: true
         },
         createdAt: {
           allowNull: false,
@@ -50,8 +42,8 @@ module.exports = (sequelize, DataTypes) => {
       },
       {}
     );
-    RiderTakenShift.associate = (models) => {
+    RiderOrderLog.associate = (models) => {
       // associations can be defined here
     };
-    return RiderTakenShift;
+    return RiderOrderLog;
   };

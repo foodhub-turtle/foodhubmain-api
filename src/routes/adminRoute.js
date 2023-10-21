@@ -153,6 +153,9 @@ adminRouter.get("/riders/active-riders", [authJwt.verifyToken, authJwt.isAdmin],
 adminRouter.get("/riders/active-order?:id", [authJwt.verifyToken, authJwt.isAdmin], riderController.getActiveRiderOrder);
 adminRouter.post("/riders/rider-log", [authJwt.verifyToken, authJwt.isAdmin], upload.single('image'), riderController.createRiderLog);
 adminRouter.post("/riders/set-shifts", [authJwt.verifyToken, authJwt.isAdmin], riderController.setRiderShiftNextWeek);
+//Rider Shifts
+adminRouter.get("/rider-shifts", [authJwt.verifyToken, authJwt.isAdmin], riderController.getAllShift);
+adminRouter.post("/rider-shift", [authJwt.verifyToken, authJwt.isAdmin], riderController.setRiderShiftNextWeek);
 
 //Item
 adminRouter.get("/items", [authJwt.verifyToken, authJwt.isAdmin], itemController.getAllItems);
@@ -225,4 +228,5 @@ adminRouter.put("/user/update-user-status?:id", [authJwt.verifyToken, authJwt.is
 //Foodhub box
 adminRouter.get("/foodhubbox/get-foodhub-box-branches", foodHubBoxController.getFoodhubBoxBranches);
 adminRouter.get("/foodhubbox/get-foodhub-box-settings", foodHubBoxController.getFoodhubBoxSettings);
+adminRouter.put("/foodhubbox/update-foodhubbox/:id", foodHubBoxController.updateBoxSettings);
 export default adminRouter;

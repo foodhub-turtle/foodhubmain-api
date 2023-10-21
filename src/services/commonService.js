@@ -13,6 +13,9 @@ export const findAllWithModel = (model) => model.findAll({
   export const findAllWithModelAndOptions = (model, options) => model.findAll({
     ...options
   });
+  export const findAndCountAllWithModelAndOptions = (model, options) => model.findAndCountAll({
+    ...options
+  });
   export const findWithModelAndOptions = (model, options) => model.findOne({
     ...options
   });

@@ -9,7 +9,7 @@ const { setting, foodhubboxsetting, foodhubboxbranch, restaurant_discount, vouch
 
 export const getFoodhubBoxBranches = catchAsync(async (req, res, next) => {
     let settingObj = await commonService.findWithModelAndFilter(setting);
-    let allDiscounts = await commonService.findAllWithModel(foodhubboxsetting);
+    let discountObj = await commonService.findWithModelAndFilter(foodhubboxsetting, {setting_id: settingObj.id});
     let allBranches = await commonService.findAllWithModel(foodhubboxbranch);
     for (let index = 0; index < allBranches.length; index++) {
       const element = await commonService.findWithModelAndFilter(branch, {id: allBranches[index].branch_id});;
@@ -52,7 +52,7 @@ export const getFoodhubBoxBranches = catchAsync(async (req, res, next) => {
     settingObj = _.pick(settingObj, ['foodhub_box_time_limit', 'foodhub_box_branch_limit']);
     let responsPayload = {
       foodhub_box_setting: settingObj,
-      foodhub_box_discounts: allDiscounts,
+      foodhub_box_discounts: discountObj[0],
       foodhub_box_branches: _.sortBy(_.slice(allBranches, 0, 15), ['priority'])
     }
     return res.status(200).json({
@@ -63,12 +63,47 @@ export const getFoodhubBoxBranches = catchAsync(async (req, res, next) => {
 });
 export const getFoodhubBoxSettings = catchAsync(async (req, res, next) => {
     let settingObj = await commonService.findWithModelAndFilter(setting);
-    let allDiscounts = await commonService.findAllWithModel(foodhubboxsetting);
+    let discount = await commonService.findWithModelAndFilter(foodhubboxsetting, {setting_id: settingObj.id});
     
     settingObj = _.pick(settingObj, ['foodhub_box_time_limit', 'foodhub_box_branch_limit']);
     let responsPayload = {
-      foodhub_box_setting: settingObj,
-      foodhub_box_discounts: allDiscounts
+      foodhub_box_time_limit: settingObj.foodhub_box_time_limit,
+      foodhub_box_branch_limit: settingObj.foodhub_box_branch_limit,
+      discount_id: discount.id,
+      foodhubbox_type: discount.foodhubbox_type,
+      percentage: discount.percentage,
+      amount: discount.amount
+    }
+    return res.status(200).json({
+      status: "success", 
+      statusCode: 200,
+      payload: responsPayload
+    });
+});
+export const updateBoxSettings = catchAsync(async (req, res, next) => {
+  let id = req.params.id;
+
+  let updatedResult = await commonService.updateModelAndFilter(foodhubboxsetting, {...req.body},{id: id});
+
+  if (!updatedResult[0]) {
+    return res.status(400).json({
+      status: "fail",
+      statusCode: 404,
+      message: "Foodhub box settings not updated"
+    });
+  }
+
+  let settingObj = await commonService.findWithModelAndFilter(setting);
+    let discount = await commonService.findWithModelAndFilter(foodhubboxsetting, {setting_id: settingObj.id});
+    
+    settingObj = _.pick(settingObj, ['foodhub_box_time_limit', 'foodhub_box_branch_limit']);
+    let responsPayload = {
+      foodhub_box_time_limit: settingObj.foodhub_box_time_limit,
+      foodhub_box_branch_limit: settingObj.foodhub_box_branch_limit,
+      discount_id: discount.id,
+      foodhubbox_type: discount.foodhubbox_type,
+      percentage: discount.percentage,
+      amount: discount.amount
     }
     return res.status(200).json({
       status: "success", 
