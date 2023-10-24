@@ -9,7 +9,7 @@
   },
   "scripts": {
     "clean": "rm -rf build && mkdir build",
-    "build-server": "babel -d ./build ./src",
+    "build-server": "babel -d ./build ./src && babel -d ./build ./index.js",
     "build": "npm run clean && npm run build-server",
     "start": "node ./build/index.js",
     "dev": "nodemon --exec ./node_modules/.bin/babel-node ./index.js",
