@@ -10,11 +10,11 @@ import "regenerator-runtime/runtime";
 // import cookieParser from "cookie-parser";
 
 //import routes
-import apiRouter from "./src/routes/index.js";
+import apiRouter from "./routes/index.js";
 
 //import error handlers
-import errorHandler from "./src/libs/globalErrorHandler.js";
-import GlobalError from "./src/libs/globalError.js";
+import errorHandler from "./libs/globalErrorHandler.js";
+import GlobalError from "./libs/globalError.js";
 import { async } from "regenerator-runtime";
 require("pg").defaults.parseInt8 = true;
 
@@ -24,7 +24,7 @@ const cors = require("cors");
 var bodyParser = require('body-parser');
 // const session = require('express-session');
 const passport = require('passport');
-const passportConfig = require('./src/config/passport')(passport);
+const passportConfig = require('./config/passport')(passport);
 
 const listEndpoints = require("express-list-endpoints"); // npm i express-list-endpoints
 
@@ -55,7 +55,7 @@ app.use(passport.initialize());
 //app.use(cookieParser()); // cookie parse middleware to access the cookie object
 
 // database
-const db = require("./src/models");
+const db = require("./models");
 const Role = db.role;
 
 var users = [];
